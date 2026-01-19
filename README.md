@@ -12,6 +12,6 @@ pip install -r requirements.txt
 ```
 ___
 
-Если вам необходима консультация/менторство/мок-собеседование и другие вопросы по дата-инженерии, то вы можете 
-обращаться ко мне. Все контакты указаны по 
-[ссылке](https://www.notion.so/korsak0v/Data-Engineer-185c62fdf79345eb9da9928356884ea0).
+Запуск docker-compose.yaml: docker-compose up -d
+Остановка docker-compose.yaml: sudo docker-compose stop
+Вывод логов: docker-compose logs

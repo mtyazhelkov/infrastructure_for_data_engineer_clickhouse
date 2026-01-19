@@ -6,4 +6,4 @@ services:
       - "8123:8123"
     environment:
       CLICKHOUSE_USER: click
-      CLICKHOUSE_PASSWORD: click
+      CLICKHOUSE_PASSWORD: ${CLICKHOUSE_PASSWORD}
