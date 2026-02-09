@@ -3,7 +3,8 @@ services:
   ch_server:
     image: clickhouse/clickhouse-server:24.8.4
     ports:
-      - "8123:8123"
+      - "8123:8123"  # HTTP порт
+      - "9000:9000"  # Нативный порт (TCP) — добавьте эту строку
     environment:
       CLICKHOUSE_USER: click
       CLICKHOUSE_PASSWORD: ${CLICKHOUSE_PASSWORD}
