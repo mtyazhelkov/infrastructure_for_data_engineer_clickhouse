@@ -11,15 +11,15 @@
 Архитектура папок
 
 /infrastructure_for_data_engineer_clickhouse/
-├── docker-compose.yaml      # Главный файл запуска
-├── .env                     # (Рекомендую) Файл, где лежит CLICKHOUSE_PASSWORD
-├── make_backup.sh           # Скрипт автоматизации бэкапов
-├── ch_data/                 # Данные таблиц (монтируется в /var/lib/clickhouse)
-├── ch_backups/              # Сами файлы бэкапов .zip (хост-папка)
-└── ch_config/               # Конфигурация (монтируется в config.d)
-    ├── config.xml           # Сеть, порты и лимиты RAM
-    ├── backup_disk.xml      # Описание диска 'backups'
-    └── allow_backup_disk.xml # Разрешение на использование этого диска
+docker-compose.yaml      # Главный файл запуска
+.env                     #  Файл, где лежит CLICKHOUSE_PASSWORD
+make_backup.sh           # Скрипт автоматизации бэкапов
+ch_data/                 # Данные таблиц (монтируется в /var/lib/clickhouse)
+ch_backups/              # Сами файлы бэкапов .zip (хост-папка)
+ch_config/               # Конфигурация (монтируется в config.d)
+config.xml           # Сеть, порты и лимиты RAM
+backup_disk.xml      # Описание диска 'backups'
+allow_backup_disk.xml # Разрешение на использование этого диска
 
 В backup_disk.xml мы указали путь /var/lib/clickhouse/backups/. 
 Благодаря  docker-compose.yaml, эта папка внутри контейнера зеркально связана с папкой ./ch_backups на  хосте.
