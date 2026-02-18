@@ -2,9 +2,37 @@ services:
 
   ch_server:
     image: clickhouse/clickhouse-server:24.8.4
+    container_name: clickhouse
+    # 1. Снимаем ограничения ядра для работы с памятью (убирает get_mempolicy error)
+    security_opt:
+      - seccomp:unconfined 
+    cap_add:
+      - SYS_NICE
+      - NET_ADMIN
+      - IPC_LOCK
+    network_mode: "bridge" # Принудительно задаем режим моста
+    # 2. Увеличиваем лимиты открытых файлов (критично для MergeTree)
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144
+    volumes:
+      - ./ch_data:/var/lib/clickhouse          # Здесь живут таблицы
+      - ./ch_backups:/var/lib/clickhouse/backups # Сюда будут падать бэкапы
+      - ./ch_config:/etc/clickhouse-server/config.d
     ports:
-      - "8123:8123"  # HTTP порт
-      - "9000:9000"  # Нативный порт (TCP) — добавьте эту строку
+      - "0.0.0.0:8123:8123" # HTTP порт
+      - "0.0.0.0:9000:9000" # Нативный порт (TCP)
     environment:
       CLICKHOUSE_USER: click
       CLICKHOUSE_PASSWORD: ${CLICKHOUSE_PASSWORD}
+      # Заставляем ClickHouse слушать все интерфейсы, чтобы Airflow его видел
+      CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: 1
+    # 3. Выделяем больше памяти, чтобы не было MEMORY_LIMIT_EXCEEDED
+    deploy:
+      resources:
+        limits:
+          memory: 4G #  Максимум для контейнера
+        reservations:
+          memory: 2G # Гарантированный минимум
+    restart: always

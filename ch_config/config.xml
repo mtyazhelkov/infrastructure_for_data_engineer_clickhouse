@@ -1,0 +1,9 @@
+<clickhouse>
+    <listen_host>0.0.0.0</listen_host>
+    <max_server_memory_usage>3500000000</max_server_memory_usage>
+    <skip_check_for_incorrect_settings>1</skip_check_for_incorrect_settings>
+    
+    <!-- Это заставит ClickHouse отвечать на HTTP даже при нагрузке -->
+    <http_port>8123</http_port>
+    <tcp_port>9000</tcp_port>
+</clickhouse>
