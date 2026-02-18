@@ -164,4 +164,5 @@ make_backup.sh
 ch_data/
 ch_backups/
 *.log
-python_client
+
+
