@@ -3,6 +3,11 @@ services:
   ch_server:
     image: clickhouse/clickhouse-server:24.8.4
     container_name: clickhouse
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
     # 1. Снимаем ограничения ядра для работы с памятью (убирает get_mempolicy error)
     security_opt:
       - seccomp:unconfined 
